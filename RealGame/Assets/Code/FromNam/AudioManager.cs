@@ -48,7 +48,7 @@ public class AudioManager : MonoBehaviour
         {
             s.source = gameObject.AddComponent<AudioSource>();
             s.source.clip = s.clip;
-            s.source.volume = music;
+            s.source.volume = s.volume;
             //s.source.pitch = s.pitch;
             s.source.loop = s.loop;
             myMusicAS.Add(s.source);
@@ -58,11 +58,23 @@ public class AudioManager : MonoBehaviour
         {
             s.source = gameObject.AddComponent<AudioSource>();
             s.source.clip = s.clip;
-            s.source.volume = sound;
+            s.source.volume = s.volume;
             //s.source.pitch = s.pitch;
             s.source.loop = s.loop;
             mySoundAS.Add(s.source);
         }
+    }
+
+    public float GetVolumeMusic(AudioClip clip)
+    {
+        Sound s = Array.Find(musics, music => music.clip == clip);
+        return s.volume;
+    }
+
+    public float GetVolumeSound(AudioClip clip)
+    {
+        Sound s = Array.Find(sounds, sound => sound.clip == clip);
+        return s.volume;
     }
 
     public void PlayMusic(string name)
@@ -114,7 +126,7 @@ public class AudioManager : MonoBehaviour
     {
         foreach (AudioSource ads in myMusicAS)
         {
-            ads.volume = music;
+            ads.volume = music * GetVolumeMusic(ads.clip);
         }
     }
 
@@ -134,7 +146,7 @@ public class AudioManager : MonoBehaviour
     {
         foreach (AudioSource ads in mySoundAS)
         {
-            ads.volume = sound;
+            ads.volume = sound * GetVolumeSound(ads.clip);
         }
     }
 
