@@ -98,12 +98,18 @@ public class Setting : MonoBehaviour
 
     public void SetResolution()
     {
-        resolutions = Screen.resolutions;
+        //resolutions = Screen.resolutions;
+
+        //resolutions[0].width = 1280;
+        //resolutions[0].height = 720;
+
+        //resolutions[1].width = 1920;
+        //resolutions[1].height = 1080;
 
         if (screen_size == resolutions.Length)
         {
             Resolution resolution = resolutions[screen_size - 1];
-            Screen.SetResolution(resolution.width, resolution.height, true);
+            Screen.SetResolution(resolution.width, resolution.height, true); // (fullscreen = true) chuyển sang chế độ toàn màn hình
         }
         else
         {
@@ -115,30 +121,36 @@ public class Setting : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        resolutions = Screen.resolutions;
+        resolutions = new Resolution[2];
+
+        resolutions[0].width = 1280;
+        resolutions[0].height = 720;
+
+        resolutions[1].width = 1920;
+        resolutions[1].height = 1080;
 
         screen_size_dropdown.ClearOptions();
 
         List<string> options = new List<string>();
 
-        int currentResolutionIndex = 0;
+        //int currentResolutionIndex = 0;
 
         for (int i = 0; i < resolutions.Length; i++)
         {
             string option = resolutions[i].width + "x" + resolutions[i].height;
             options.Add(option);
 
-            if (resolutions[i].width == Screen.currentResolution.width &&
-                resolutions[i].height == Screen.currentResolution.height)
-            {
-                currentResolutionIndex = i;
-            }
+            //if (resolutions[i].width == Screen.currentResolution.width &&
+            //    resolutions[i].height == Screen.currentResolution.height)
+            //{
+            //    currentResolutionIndex = i;
+            //}
         }
 
         options.Add("Full Screen");
 
         screen_size_dropdown.AddOptions(options);
-        screen_size_dropdown.value = currentResolutionIndex;
+        //screen_size_dropdown.value = currentResolutionIndex;
         screen_size_dropdown.RefreshShownValue();
 
         if (SaveSystem.LoadData() != null)
